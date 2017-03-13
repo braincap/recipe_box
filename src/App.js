@@ -1,21 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+var RecipeList = React.createClass({
+  getInitialState: function () {
+    return {
+      recipes: ["Oatmeal", "Dosa", "Pumpkin Pie"]
+    }
+  },
+  render: function () {
+    return (
+      <div>
+        <ul className="list-unstyled">
+          {this.state.recipes.map(item => <li key={item}><Recipe item={item} /></li>)}
+        </ul>
+      </div>
+    )
+  }
+});
+
+var Recipe = React.createClass({
+  render: function () {
+    return (
+      <div className="recipe well">{this.props.item}</div>
+    )
+  }
+})
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="container well">
+        <RecipeList />
+        <button className="btn btn-primary">Add Recipe</button>
       </div>
     );
   }
-}
+};
 
 export default App;
