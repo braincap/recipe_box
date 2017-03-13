@@ -1,11 +1,11 @@
-.container.well {
-  /*border: 1px black solid;*/
+.container {
   margin-top: 20px;
 }
 
-.recipe.well {
-  padding: 10px;
-  background-color: #dff0d8;
-  border-color: #dff0d8;
-  margin-bottom: 5px;
+.panel-heading {
+  cursor: pointer;
+}
+
+.panel-body {
+  display: none;
 }
