@@ -2,7 +2,7 @@ var React = require('react');
 var Modal = require('react-bootstrap').Modal;
 var Button = require('react-bootstrap').Button;
 
-var AddRecipeForm = React.createClass({
+var EditRecipeForm = React.createClass({
     getInitialState() {
         return { showModal: false };
     },
@@ -14,24 +14,24 @@ var AddRecipeForm = React.createClass({
     },
     handleSubmit(e) {
         e.preventDefault();
-        this.props.updateList(this.refs.refRecipeName.value, this.refs.ingredientsName.value);
+        this.props.editRecipe(this.refs.refRecipeName.value, this.refs.ingredientsName.value);
         this.close();
     },
     render: function () {
         return (
             <div>
-                <Button bsStyle="primary" onClick={this.open}>Add a Recipe</Button>
+                <Button style={{ "marginLeft": "5px" }} bsStyle="default" onClick={this.open}>Edit</Button>
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <form onSubmit={this.handleSubmit}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Add a Recipe</Modal.Title>
+                            <Modal.Title>Edit Recipe</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <div className="form-group">
                                 <label htmlFor="recipeInput">Recipe Name</label>
-                                <input type="text" className="form-control" id="recipeInput" ref="refRecipeName" />
+                                <input type="text" className="form-control" id="recipeInput" ref="refRecipeName" defaultValue={this.props.recipe} />
                                 <label htmlFor="ingredientsInput">Ingredients</label>
-                                <textarea className="form-control" rows="3" id="ingredientsInput" ref="ingredientsName" />
+                                <textarea className="form-control" rows="3" id="ingredientsInput" ref="ingredientsName" defaultValue={this.props.ingredients} />
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
@@ -45,4 +45,4 @@ var AddRecipeForm = React.createClass({
     }
 });
 
-module.exports = AddRecipeForm;
+module.exports = EditRecipeForm;

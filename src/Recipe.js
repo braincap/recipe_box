@@ -3,6 +3,7 @@ var Button = require('react-bootstrap').Button;
 var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
 var ListGroup = require('react-bootstrap').ListGroup;
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
+var EditRecipeForm = require('./EditRecipeForm');
 var $ = require('jquery');
 
 var Recipe = React.createClass({
@@ -11,8 +12,10 @@ var Recipe = React.createClass({
         $(e.currentTarget).next().slideToggle(200);
     },
     handleDeleteItem: function () {
-        console.log("Recipe delete : " + this.props.item);
         this.props.deleteRecipe(this.props.item);
+    },
+    editRecipe: function (newName, newIngredients) {
+        this.props.editRecipe(this.props.item, newName, newIngredients)
     },
     render: function () {
         return (
@@ -22,7 +25,7 @@ var Recipe = React.createClass({
                     <ListGroup>{this.props.ingredients.split(',').map(material => <ListGroupItem key={this.props.item + ":" + material}>{material}</ListGroupItem>)}</ListGroup>
                     <ButtonToolbar>
                         <Button bsStyle="danger" onClick={this.handleDeleteItem}>Delete</Button>
-                        <Button>Edit</Button>
+                        <EditRecipeForm editRecipe={this.editRecipe} recipe={this.props.item} ingredients={this.props.ingredients} />
                     </ButtonToolbar>
                 </div>
             </div>
