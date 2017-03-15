@@ -1,46 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-var $ = require('jquery');
+var RecipeList = require('./RecipeList.js');
+var AddRecipeForm = require('./AddRecipeForm.js');
 
-var RecipeList = React.createClass({
+var App = React.createClass({
   getInitialState: function () {
     return {
-      recipes: ["Oatmeal", "Dosa", "Pumpkin Pie"]
+      recipes: {
+        "Oatmeal": "Water, Quacker Oats",
+        "Dosa": "Batter, Oil",
+        "Pumpkin Pie": "Pumpkin, Sugar, Yeast"
+      }
     }
   },
-  render: function () {
-    return (
-      <div className="recipe-list">
-        {this.state.recipes.map(item => <Recipe key={item} item={item} />)}
-      </div>
-    )
-  }
-});
-
-var Recipe = React.createClass({
-  handleClick: function (e) {
-    $('.panel-body').not($(e.currentTarget).next()).slideUp(200);
-    $(e.currentTarget).next().slideToggle(200);
+  updateRecipeList: function (newItem, ingredients) {
+    var newList = Object.assign({}, this.state.recipes);
+    newList[newItem] = ingredients;
+    this.setState({ recipes: newList });
+  },
+  deleteRecipe: function (recipe) {
+    console.log("Delete " + recipe);
+    var newList = Object.assign({}, this.state.recipes);
+    delete newList[recipe];
+    this.setState({ recipes: newList });
   },
   render: function () {
     return (
-      <div className="recipe panel panel-success">
-        <div className="panel-heading" onClick={this.handleClick}>{this.props.item}</div>
-        <div className="panel-body">This is the recipe of {this.props.item}</div>
-      </div>
-    )
-  }
-})
-
-class App extends Component {
-  render() {
-    return (
       <div className="container well">
-        <RecipeList />
-        <button className="btn btn-primary">Add Recipe</button>
+        <RecipeList deleteRecipe={this.deleteRecipe} recipes={this.state.recipes} />
+        <AddRecipeForm updateList={this.updateRecipeList} title="Add Recipe" />
       </div>
     );
   }
-};
+});
+
 
 export default App;
